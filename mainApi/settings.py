@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
-    "users.apps.UsersConfig"
+    "users.apps.UsersConfig",
+    "debts.apps.DebtsConfig",
 ]
 
 MIDDLEWARE = [
