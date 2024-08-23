@@ -20,12 +20,14 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from auth.views import EmailTokenObtainPairView, UserRegistrationView
 from users.urls import urlpatterns as user_urls
+from debts.urls import debts_urlpatterns
 
 api_urlpatterns = [
     path('auth/login/', EmailTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('auth/register/', UserRegistrationView.as_view(), name='user_registration'),
     path('', include(user_urls), name='user'),
+    path('', include(debts_urlpatterns), name='debts'),
 ]
 
 urlpatterns = [

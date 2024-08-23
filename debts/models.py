@@ -11,6 +11,14 @@ class Debtor(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def total_debt(self):
+        return self.debt_set.aggregate(total=models.Sum('amount'))['total'] or 0
+
+    @property
+    def last_updated(self):
+        return self.debt_set.first().created if self.debt_set.exists() else None
+
     class Meta:
         verbose_name = 'Debtor'
         verbose_name_plural = 'Debtors'
