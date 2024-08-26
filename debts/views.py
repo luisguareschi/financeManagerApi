@@ -1,5 +1,4 @@
 from django.db.models import Sum
-from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -17,7 +16,13 @@ class DebtsViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
     def get_queryset(self):
-        return Debt.objects.filter(user=self.request.user).order_by('-created')
+        queryset = Debt.objects.filter(user=self.request.user).order_by('-created')
+
+        debtor_id = self.request.query_params.get('debtorId', None)
+        if debtor_id:
+            queryset = queryset.filter(debtor_id=debtor_id)
+
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
