@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from debts.models import Debt, Debtor
-from debts.serializers import DebtSerializer
+from debts.serializers import DebtSerializer, DebtorSerializer
 
 
 # Create your views here.
@@ -55,3 +55,15 @@ class DebtsViewSet(viewsets.ModelViewSet):
         response['debtors'] = debtors
 
         return Response(response, status=200)
+
+
+class DebtorsViewSet(viewsets.ModelViewSet):
+    serializer_class = DebtorSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None
+
+    def get_queryset(self):
+        return Debtor.objects.filter(created_by=self.request.user).order_by('name')
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
