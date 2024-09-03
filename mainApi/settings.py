@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     "users.apps.UsersConfig",
     "debts.apps.DebtsConfig",
+    'notes.apps.NotesConfig'
 ]
 
 MIDDLEWARE = [
