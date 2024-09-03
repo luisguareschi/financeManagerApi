@@ -13,5 +13,5 @@ class NotesViewSet(viewsets.ModelViewSet):
     serializer_class = NotesSerializer
 
     def get_queryset(self):
-        return Note.objects.filter(user=self.request.user).order_by('-created')
+        return Note.objects.filter(user=self.request.user).order_by('created')
 
